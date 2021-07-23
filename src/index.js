@@ -1,76 +1,82 @@
-// 3. Redux 사용한 Todo
-import {createStore} from "redux"
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./components/App";
 
-const ADD_TODO = "ADD_TODO"
-const REMOVE_TODO = "REMOVE_TODO"
+ReactDOM.render(<App></App>, document.getElementById("root"));
 
-// !! Reducer
-const reducer = (state=[], action) => {
-  switch(action.type){
-    case ADD_TODO:
-      return [...state,{text:action.text, id:Date.now()}]
-    case REMOVE_TODO:
-      return state.filter((todo)=> todo.id!==action.id)
-    default:
-      return state
-  }
-}
+// // 3. Redux 사용한 Todo
+// import {createStore} from "redux"
 
-// !! Action
-const addTodo = (text) => {
-  return {
-    type:ADD_TODO,
-    text
-  }
-}
-const removeTodo = (id) => {
-  return {
-    type:REMOVE_TODO,
-    id
-  }
-}
+// const ADD_TODO = "ADD_TODO"
+// const REMOVE_TODO = "REMOVE_TODO"
 
-// !! store
-const store = createStore(reducer)
-store.subscribe(()=>console.log(store.getState())) // store에 변경 생기면 콘솔에 찍기
+// // !! Reducer
+// const reducer = (state=[], action) => {
+//   switch(action.type){
+//     case ADD_TODO:
+//       return [...state,{text:action.text, id:Date.now()}]
+//     case REMOVE_TODO:
+//       return state.filter((todo)=> todo.id!==action.id)
+//     default:
+//       return state
+//   }
+// }
 
-// !! dispatching
-const dispatchAddTodo = (text) => {
-  store.dispatch(addTodo(text)) // store에서 reducer로 action 보내주기
-}
-const dispatchRemoveTodo = (e)=>{
-  const id = parseInt(e.target.parentNode.id)
-  store.dispatch(removeTodo(id))
-}
+// // !! Action
+// const addTodo = (text) => {
+//   return {
+//     type:ADD_TODO,
+//     text
+//   }
+// }
+// const removeTodo = (id) => {
+//   return {
+//     type:REMOVE_TODO,
+//     id
+//   }
+// }
 
-const paintTodos = () => {
-  const todos = store.getState()
-  ul.innerHTML = ""
-  todos.forEach((todo)=>{
-    const li = document.createElement("li")
-    const btn = document.createElement("button")
-    btn.innerText = "REMOVE" // 버튼에 보일 글씨 할당
-    btn.addEventListener("click", dispatchRemoveTodo)
-    li.id = todo.id // id값 할당
-    li.innerText = todo.text; // 안에 보일 글 할당
-    li.appendChild(btn) // 만든 btn li에 붙여주기
-    ul.appendChild(li) // 만든 li ul에 붙여주기
-  })
-}
-store.subscribe(paintTodos)
+// // !! store
+// const store = createStore(reducer)
+// store.subscribe(()=>console.log(store.getState())) // store에 변경 생기면 콘솔에 찍기
 
-const form = document.querySelector("form")
-const input = document.querySelector("input")
-const ul = document.querySelector("ul")
+// // !! dispatching
+// const dispatchAddTodo = (text) => {
+//   store.dispatch(addTodo(text)) // store에서 reducer로 action 보내주기
+// }
+// const dispatchRemoveTodo = (e)=>{
+//   const id = parseInt(e.target.parentNode.id)
+//   store.dispatch(removeTodo(id))
+// }
 
-const onSubmit = e => {
-  e.preventDefault();
-  const toDo = input.value;
-  input.value="";
-  dispatchAddTodo(toDo)
-}
+// const paintTodos = () => {
+//   const todos = store.getState()
+//   ul.innerHTML = ""
+//   /todos.forEach((todo)=>{
+//     const li = document.createElement("li")
+//     const btn = document.createElement("button")
+//     btn.innerText = "REMOVE" // 버튼에 보일 글씨 할당
+//     btn.addEventListener("click", dispatchRemoveTodo)
+//     li.id = todo.id // id값 할당
+//     li.innerText = todo.text; // 안에 보일 글 할당
+//     li.appendChild(btn) // 만든 btn li에 붙여주기
+//     ul.appendChild(li) // 만든 li ul에 붙여주기
+//   })
+// }
+// store.subscribe(paintTodos)
 
-form.addEventListener("submit", onSubmit)
+// const form = document.querySelector("form")
+// const input = document.querySelector("input")
+// const ul = document.querySelector("ul")
+
+// const onSubmit = e => {
+//   e.preventDefault();
+//   const toDo = input.value;
+//   input.value="";
+//   dispatchAddTodo(toDo)
+// }
+
+// form.addEventListener("submit", onSubmit)
 
 // 2. Vanila JS 사용한 Todo 
 // 단순히 HTML만 변경해주는 것이고, 직접 배열에다가 데이터를 넣고 관리해줘야 함
