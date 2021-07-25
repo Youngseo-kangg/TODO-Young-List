@@ -1,8 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
+import { Provider } from "react-redux"
+import store from "./routes/store"
 
-ReactDOM.render(<App></App>, document.getElementById("root"));
+ReactDOM.render(
+    // App에서 store에 접근하려면? 
+    // Provider 컴포넌트와 store 컴포넌트를 불러와 App에 세팅해줘야 함
+    <Provider store={store}>
+        <App />
+    </Provider>, 
+    document.getElementById("root")
+);
 
 // // 3. Redux 사용한 Todo
 // import {createStore} from "redux"
